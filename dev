@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+api-doc () {
+    sbt doc
+    now switch xieyuheng
+    now -n propagator target/scala-2.12/api/
+}
+
+main () {
+    for TASK in $@
+    do
+        $TASK
+    done
+}
+
+main $@
