@@ -1,7 +1,5 @@
 ------
-
-* ><
-
+* syntax examples
   #+begin_src scala
   Cell("asd") <= Content()
 
