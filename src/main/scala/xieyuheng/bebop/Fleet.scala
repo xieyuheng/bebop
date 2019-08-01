@@ -1,5 +1,5 @@
 package xieyuheng.bebop.sequential
 
-class Network {
+class Fleet {
 
 }
