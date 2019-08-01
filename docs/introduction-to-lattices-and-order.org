@@ -116,8 +116,9 @@
       To describe how to represent ordered sets diagrammatically,
       we need the idea of covering.
 
-    - (covering relation)
+    - (cover)
       x >- y := x > y and forall x > z >= y => z == y
+      (covered by)
       x -< y := x < y and forall x <= z < y => z == x
 
     - in the finite case
@@ -136,9 +137,9 @@
 
     - (lower bound)
 
-    - (least upper bound) (supremum)
+    - (least upper bound) (supremum) (sup)
 
-    - (greatest lower bound) (infimum)
+    - (greatest lower bound) (infimum) (inf)
 
     - (top) (bottom)
 
