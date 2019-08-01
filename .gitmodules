@@ -1,0 +1,3 @@
+[submodule "deps/pracat"]
+	path = deps/pracat
+	url = https://github.com/xieyuheng/pracat
