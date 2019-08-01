@@ -1,4 +1,4 @@
-package xieyuheng.bebop.sequential
+package xieyuheng.bebop
 
 class Fleet {
 
