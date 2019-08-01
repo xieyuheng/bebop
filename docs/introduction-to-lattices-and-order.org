@@ -110,6 +110,14 @@
       through which one can describe, analyse and reason about
       the behaviour of entities such as datatypes, programs and specifications.
 
+*** Diagrams: the art of drawing ordered sets
+
+    - One of the most useful and attractive features of ordered sets is that,
+      in the finite case at least, they can be "drawn".
+
+      To describe how to represent ordered sets diagrammatically,
+      we need the idea of covering.
+
 * 2 lattices and complete lattices
 
 * 3 formal concept analysis
