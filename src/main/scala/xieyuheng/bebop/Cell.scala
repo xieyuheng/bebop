@@ -2,7 +2,11 @@ package xieyuheng.bebop
 
 import xieyuheng.pracat.JoinSemilattice
 
-class Cell[E](implicit lattice: JoinSemilattice[E]) {
+import akka.actor.Actor
+import akka.actor.Props
+import akka.event.Logging
+
+class Cell[E](implicit lattice: JoinSemilattice[E]) extends Actor {
   private var content: Option[E] = None
 
   def add(a: E) = {
@@ -19,4 +23,11 @@ class Cell[E](implicit lattice: JoinSemilattice[E]) {
   }
 
   def value: Option[E] = content
+
+  val log = Logging(context.system, this)
+
+  def receive = {
+    case "test" => log.info("received test")
+    case _      => log.info("received unknown message")
+  }
 }
