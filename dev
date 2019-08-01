@@ -3,7 +3,7 @@
 api-doc () {
     sbt doc
     now switch xieyuheng
-    now -n propagator target/scala-2.12/api/
+    now -n bebop target/scala-2.12/api/
 }
 
 main () {

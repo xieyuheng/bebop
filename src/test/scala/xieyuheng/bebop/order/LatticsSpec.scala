@@ -1,5 +1,5 @@
 import org.scalatest._
-import xieyuheng.propagator.order._
+import xieyuheng.bebop.order._
 
 class LatticsSpec extends FlatSpec with Matchers {
   "Lattics" can "be extended" in {
