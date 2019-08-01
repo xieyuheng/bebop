@@ -5,6 +5,7 @@ scalaVersion := "2.12.8"
 lazy val akkaVersion = "2.5.23"
 lazy val akkaHttpVersion = "10.1.9"
 lazy val slickVersion = "3.3.1"
+lazy val pracatVersion = "0.0.1-SNAPSHOT"
 
 scalacOptions ++= Seq(
   "-deprecation",
@@ -17,6 +18,7 @@ scalacOptions ++= Seq(
 )
 
 libraryDependencies ++= Seq(
+  "xieyuheng" %% "pracat" % pracatVersion,
   "com.typesafe.akka" %% "akka-actor" % akkaVersion,
   "com.typesafe.akka" %% "akka-testkit" % akkaVersion,
   "com.typesafe.akka" %% "akka-stream" % akkaVersion,
