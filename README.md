@@ -1,5 +1,7 @@
 # Bebop
 
+An implementation of the Propagator Model.
+
 For the order of the Solar System.
 
 ## Contains
