@@ -125,9 +125,25 @@
       x < y <=> exists a finite sequence of covering relations
       x = x0 −< x1 -< ... −< xn = y
 
-      thus, the order relation determines, 
+      thus, the order relation determines,
       and is determined by the covering relation.
 
 * 2 lattices and complete lattices
+
+*** lattices as ordered sets
+
+    - (upper bound)
+
+    - (lower bound)
+
+    - (least upper bound) (supremum)
+
+    - (greatest lower bound) (infimum)
+
+    - (top) (bottom)
+
+    - (join) (meet)
+
+*** lattices as algebraic structures
 
 * 3 formal concept analysis
