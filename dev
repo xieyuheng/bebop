@@ -6,6 +6,10 @@ api-doc () {
     now -n bebop target/scala-2.12/api/
 }
 
+deps () {
+    git submodule update --remote
+}
+
 main () {
     for TASK in $@
     do
