@@ -12,7 +12,7 @@ deps () {
     git submodule update --remote
     for SUBMODULE in $(find deps/ -maxdepth 1 -mindepth 1)
     do
-        pushd $SUBMODULE & sbt +publishLocal & popd
+        pushd $SUBMODULE && sbt +publishLocal && popd
     done
 }
 
