@@ -1,2 +1,5 @@
-* examples from the art
-* examples from the revised report
+* examples
+- from the art
+- from the revised report
+* persistent cell
+- a fleet of cells as  database
