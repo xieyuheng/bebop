@@ -2,32 +2,71 @@ package xieyuheng.bebop
 
 import xieyuheng.pracat.JoinSemilattice
 
-import akka.actor.Actor
-import akka.actor.Props
+import akka.actor.{ Actor, ActorRef, ActorSystem, Props, PoisonPill }
 import akka.event.Logging
 
-class Cell[E](implicit lattice: JoinSemilattice[E]) extends Actor {
-  private var content: Option[E] = None
+class Cell[E]
+  (implicit
+    lattice: JoinSemilattice[E],
+    system: ActorSystem) {
 
-  def add(a: E) = {
-    val old = content
-    content match {
-      case Some(b) =>
-        content = Some(lattice.join(a, b))
-      case None =>
-        content = Some(a)
+  object CellActor {
+    def props = Props(new CellActor)
+  }
+
+  object Msg {
+    case class Foreach(f: Option[E] => Unit)
+    case class Join(value: E)
+  }
+
+  class CellActor extends Actor {
+
+    private var content: Option[E] = None
+
+    private def join(a: E) = {
+      val old = content
+      content match {
+        case Some(b) =>
+          content = Some(lattice.join(a, b))
+        case None =>
+          content = Some(a)
+      }
+      if (old != content) {
+        //
+      }
     }
-    if (old != content) {
-      ???
+
+    val log = Logging(context.system, this)
+
+    def receive = {
+      case Msg.Foreach(f) =>
+        f(content)
+      case Msg.Join(a) =>
+        join(a)
     }
   }
 
-  def value: Option[E] = content
+  val actor = system.actorOf(CellActor.props)
 
-  val log = Logging(context.system, this)
+  def foreach(f: Option[E] => Unit): Unit =
+    actor ! Msg.Foreach(f)
 
-  def receive = {
-    case "test" => log.info("received test")
-    case _      => log.info("received unknown message")
+  def join(a: E): Unit =
+    actor ! Msg.Join(a)
+}
+
+object CellApp extends App {
+  implicit val intJoinSemilattice = new JoinSemilattice[Int] {
+    def join(a: Int, b: Int) = a
   }
+
+  implicit val system = ActorSystem("bebop")
+
+  val cell = new Cell()
+
+  cell.foreach(println)
+  cell.join(123)
+  cell.foreach(println)
+  cell.join(123123)
+  cell.foreach(println)
 }
