@@ -2,4 +2,4 @@
 - from the art
 - from the revised report
 * persistent cell
-- a fleet of cells as  database
+- cells as database
