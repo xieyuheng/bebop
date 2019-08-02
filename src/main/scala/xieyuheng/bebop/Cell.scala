@@ -10,16 +10,16 @@ class Cell[E]
     lattice: JoinSemilattice[E],
     system: ActorSystem) {
 
-  object CellActor {
+  private object CellActor {
     def props = Props(new CellActor)
   }
 
-  object Msg {
+  private object Msg {
     case class Foreach(f: Option[E] => Unit)
-    case class Join(value: E)
+    case class Put(value: E)
   }
 
-  class CellActor extends Actor {
+  private class CellActor extends Actor {
 
     private var content: Option[E] = None
 
@@ -41,18 +41,18 @@ class Cell[E]
     def receive = {
       case Msg.Foreach(f) =>
         f(content)
-      case Msg.Join(a) =>
+      case Msg.Put(a) =>
         join(a)
     }
   }
 
-  val actor = system.actorOf(CellActor.props)
+  private val actor = system.actorOf(CellActor.props)
 
   def foreach(f: Option[E] => Unit): Unit =
     actor ! Msg.Foreach(f)
 
-  def join(a: E): Unit =
-    actor ! Msg.Join(a)
+  def put(a: E): Unit =
+    actor ! Msg.Put(a)
 }
 
 object CellApp extends App {
@@ -65,8 +65,8 @@ object CellApp extends App {
   val cell = new Cell()
 
   cell.foreach(println)
-  cell.join(123)
+  cell.put(123)
   cell.foreach(println)
-  cell.join(123123)
+  cell.put(123123)
   cell.foreach(println)
 }
