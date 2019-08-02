@@ -25,8 +25,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-http" % akkaHttpVersion,
   "com.typesafe.akka" %% "akka-http-spray-json" % akkaHttpVersion,
   "com.typesafe.slick" %% "slick" % slickVersion,
-  "com.h2database" % "h2" % "1.4.197",
-  "mysql" % "mysql-connector-java" % "6.0.6",
+  "org.postgresql" % "postgresql" % "9.3-1100-jdbc41",
   "ch.qos.logback" % "logback-classic" % "1.2.3",
   "io.spray" %% "spray-json" % "1.3.5",
   "org.scalatest" %% "scalatest" % "3.0.5" % "test"

@@ -1,4 +1,3 @@
-- use postgres
 ------
 * syntax examples
   #+begin_src scala
