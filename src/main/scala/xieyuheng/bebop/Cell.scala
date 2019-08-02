@@ -12,47 +12,56 @@ class Cell[E]
 
   private object CellActor {
     def props = Props(new CellActor)
-  }
 
-  private object Msg {
     case class Foreach(f: Option[E] => Unit)
     case class Put(value: E)
+    case class RegisterNeighbor(neighbor: ActorRef, n: Int)
   }
 
   private class CellActor extends Actor {
 
+    val log = Logging(context.system, this)
+
+    private var neighbors: List[(ActorRef, Int)] = Nil
+
     private var content: Option[E] = None
 
     private def join(a: E) = {
-      val old = content
-      content match {
-        case Some(b) =>
-          content = Some(lattice.join(a, b))
-        case None =>
-          content = Some(a)
+      val c = content match {
+        case Some(b) => lattice.join(a, b)
+        case None => a
       }
-      if (old != content) {
-        //
+
+      if (content != Some(c)) {
+        content = Some(c)
+        neighbors.foreach { case (neighbor, n) =>
+          neighbor ! (c, n)
+        }
       }
     }
 
-    val log = Logging(context.system, this)
-
     def receive = {
-      case Msg.Foreach(f) =>
+      case CellActor.Foreach(f) =>
         f(content)
-      case Msg.Put(a) =>
+      case CellActor.Put(a) =>
         join(a)
+      case CellActor.RegisterNeighbor(neighbor, n) =>
+        neighbors = (neighbor, n) :: neighbors
+      case message =>
+        log.info(s"received unknown message: ${message}")
     }
   }
 
   private val actor = system.actorOf(CellActor.props)
 
   def foreach(f: Option[E] => Unit): Unit =
-    actor ! Msg.Foreach(f)
+    actor ! CellActor.Foreach(f)
 
   def put(a: E): Unit =
-    actor ! Msg.Put(a)
+    actor ! CellActor.Put(a)
+
+  def asArgOf(tran: ActorRef, n: Int): Unit =
+    actor ! CellActor.RegisterNeighbor(tran, n)
 }
 
 object CellApp extends App {
