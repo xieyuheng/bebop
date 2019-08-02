@@ -1,13 +1,2 @@
-------
-* syntax examples
-  #+begin_src scala
-  Cell("asd") <= Content()
-
-  val propagator = Propagator()
-
-  propagator
-    .from(Cell :: Cell :: HNil)
-    .to(Cell)
-
-  val cell = propagator(Cell, Cell)
-  #+end_src
+* examples from the art
+* examples from the revised report
