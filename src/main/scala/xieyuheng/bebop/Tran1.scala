@@ -48,15 +48,22 @@ class Tran1[A1, R]
     }
   }
 
-  def connect(arg1Cell: Cell[A1], retCell: Cell[R]): ActorRef = {
-    val sym = UUID.randomUUID().toString
-    val actor = system.actorOf(Tran1Actor.props(arg1Cell, retCell), name = sym)
+  def connect(arg1Cell: Cell[A1], retCell: Cell[R], name: String = ""): ActorRef = {
+    val actor = if (name == "") {
+      val uuid = UUID.randomUUID().toString
+      system.actorOf(Tran1Actor.props(arg1Cell, retCell), name = uuid)
+    } else {
+      system.actorOf(Tran1Actor.props(arg1Cell, retCell), name)
+    }
+
     initAction match {
       case Some(fun) =>
         actor ! msg.PutFun(fun)
       case None => {}
     }
+
     arg1Cell.asArgOf(actor, 1)
+
     actor
   }
 }

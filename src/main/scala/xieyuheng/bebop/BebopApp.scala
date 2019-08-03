@@ -26,9 +26,9 @@ object BebopApp extends App {
 
   val tran = Tran1.empty[Int, Int]
 
-  val axy = tran.connect(x, y)
-  val axw = tran.connect(x, w)
-  val ayz = tran.connect(y, z)
+  val axy = tran.connect(x, y, "xy")
+  val axw = tran.connect(x, w, "xw")
+  val ayz = tran.connect(y, z, "yz")
 
   axy ! tran.msg.PutFun {
     case x =>

@@ -1,4 +1,3 @@
-- add name to tran.connect
 - Tran2
 - macro to use general Tran over function
 - macro to generate Tran1, Tran2, ..., Tran22
