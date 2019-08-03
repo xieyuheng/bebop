@@ -1,8 +1,9 @@
+- compose connectionName from cellName
+
 - Tran2
 - macro to use general Tran over function
 - macro to generate Tran1, Tran2, ..., Tran22
 - Interval math
-- tran.apply
 * examples
 - from the art
 - from the revised report

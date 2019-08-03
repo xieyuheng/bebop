@@ -14,49 +14,103 @@ object BebopApp extends App {
 
   implicit val system = ActorSystem("bebop")
 
-  val x = Cell("x")
-  val y = Cell("y")
-  val z = Cell("z")
-  val w = Cell("w")
+  // {
+  //   val x = Cell("x")
+  //   val y = Cell("y")
+  //   val z = Cell("z")
+  //   val w = Cell("w")
 
-  // val tran = Tran1[Int, Int] {
-  //   case x =>
-  //     x + 1
+  //   // val tran = Tran1[Int, Int] {
+  //   //   case x =>
+  //   //     x + 1
+  //   // }
+
+  //   val tran = Tran1.empty[Int, Int]
+
+  //   val axy = tran.connect(x, y, "xy")
+  //   val axw = tran.connect(x, w, "xw")
+  //   val ayz = tran.connect(y, z, "yz")
+
+  //   axy ! tran.msg.PutFun {
+  //     case x =>
+  //       x + 1
+  //   }
+
+  //   axw ! tran.msg.PutFun {
+  //     case x =>
+  //       x + 1
+  //   }
+
+  //   ayz ! tran.msg.PutFun {
+  //     case x =>
+  //       x + 100
+  //   }
+
+  //   println(ayz)
+
+  //   println(x.actor)
+
+  //   x.put(1)
+
+  //   import system.dispatcher
+
+  //   system.scheduler.scheduleOnce(500.millis) {
+  //     x.foreach { content => println(s"x: ${content}") }
+  //     y.foreach { content => println(s"y: ${content}") }
+  //     z.foreach { content => println(s"z: ${content}") }
+  //     w.foreach { content => println(s"w: ${content}") }
+  //   }
   // }
 
-  val tran = Tran1.empty[Int, Int]
+  // {
+  //   val x = Cell("x")
 
-  val axy = tran.connect(x, y, "xy")
-  val axw = tran.connect(x, w, "xw")
-  val ayz = tran.connect(y, z, "yz")
+  //   val tran = Tran1[Int, Int] {
+  //     case x =>
+  //       x + 1
+  //   }
 
-  axy ! tran.msg.PutFun {
-    case x =>
-      x + 1
-  }
+  //   val (xy, y) = tran $ x
+  //   val (xw, w) = tran $ x
+  //   val (yz, z) = tran $ y
 
-  axw ! tran.msg.PutFun {
-    case x =>
-      x + 1
-  }
+  //   println(yz)
 
-  ayz ! tran.msg.PutFun {
-    case x =>
-      x + 100
-  }
+  //   println(x.actor)
 
-  println(ayz)
+  //   x.put(1)
 
-  println(x.actor)
+  //   import system.dispatcher
 
-  x.put(1)
+  //   system.scheduler.scheduleOnce(500.millis) {
+  //     x.foreach { content => println(s"x: ${content}") }
+  //     y.foreach { content => println(s"y: ${content}") }
+  //     z.foreach { content => println(s"z: ${content}") }
+  //     w.foreach { content => println(s"w: ${content}") }
+  //   }
+  // }
 
-  import system.dispatcher
+  {
+    val x = Cell("x")
 
-  system.scheduler.scheduleOnce(500.millis) {
-    x.foreach { content => println(s"x: ${content}") }
-    y.foreach { content => println(s"y: ${content}") }
-    z.foreach { content => println(s"z: ${content}") }
-    w.foreach { content => println(s"w: ${content}") }
+    val tran = Tran1[Int, Int] {
+      case x =>
+        x + 1
+    }
+
+    val y = tran(x)
+    val w = tran(x)
+    val z = tran(y)
+
+    x.put(1)
+
+    import system.dispatcher
+
+    system.scheduler.scheduleOnce(500.millis) {
+      x.foreach { content => println(s"x: ${content}") }
+      y.foreach { content => println(s"y: ${content}") }
+      z.foreach { content => println(s"z: ${content}") }
+      w.foreach { content => println(s"w: ${content}") }
+    }
   }
 }

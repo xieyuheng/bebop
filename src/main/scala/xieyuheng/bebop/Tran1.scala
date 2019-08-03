@@ -56,15 +56,29 @@ class Tran1[A1, R]
       system.actorOf(Tran1Actor.props(arg1Cell, retCell), name)
     }
 
-    initAction match {
-      case Some(fun) =>
-        actor ! msg.PutFun(fun)
-      case None => {}
-    }
-
+    initAction.foreach { fun => actor ! msg.PutFun(fun) }
     arg1Cell.asArgOf(actor, 1)
-
     actor
+  }
+
+  def $ (
+    arg1Cell: Cell[A1],
+    connectionName: String = "",
+    cellName: String = "",
+  ): (ActorRef, Cell[R]) = {
+    val retCell = Cell[R](cellName)
+    val connection = connect(arg1Cell, retCell, connectionName)
+    (connection, retCell)
+  }
+
+  def apply (
+    arg1Cell: Cell[A1],
+    connectionName: String = "",
+    cellName: String = "",
+  ): Cell[R] = {
+    val retCell = Cell[R](cellName)
+    connect(arg1Cell, retCell, connectionName)
+    retCell
   }
 }
 
