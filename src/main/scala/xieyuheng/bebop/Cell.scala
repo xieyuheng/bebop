@@ -5,6 +5,8 @@ import xieyuheng.pracat.JoinSemilattice
 import akka.actor.{ Actor, ActorRef, ActorSystem, Props, PoisonPill }
 import akka.event.Logging
 
+import java.util.UUID
+
 class Cell[E]
   (implicit
     lattice: JoinSemilattice[E],
@@ -12,7 +14,9 @@ class Cell[E]
 
   private object CellActor {
     def props = Props(new CellActor)
+  }
 
+  object msg {
     case class Foreach(f: Option[E] => Unit)
     case class Put(value: E)
     case class RegisterNeighbor(neighbor: ActorRef, n: Int)
@@ -41,25 +45,26 @@ class Cell[E]
     }
 
     def receive = {
-      case CellActor.Foreach(f) =>
+      case msg.Foreach(f) =>
         f(content)
-      case CellActor.Put(a) =>
+      case msg.Put(a) =>
         join(a)
-      case CellActor.RegisterNeighbor(neighbor, n) =>
+      case msg.RegisterNeighbor(neighbor, n) =>
         neighbors = (neighbor, n) :: neighbors
-      case message =>
-        log.info(s"received unknown message: ${message}")
+      case msg =>
+        log.info(s"received unknown message: ${msg}")
     }
   }
 
-  private val actor = system.actorOf(CellActor.props)
+  val sym = UUID.randomUUID().toString
+  private val actor = system.actorOf(CellActor.props, name = sym)
 
   def foreach(f: Option[E] => Unit): Unit =
-    actor ! CellActor.Foreach(f)
+    actor ! msg.Foreach(f)
 
   def put(a: E): Unit =
-    actor ! CellActor.Put(a)
+    actor ! msg.Put(a)
 
   def asArgOf(tran: ActorRef, n: Int): Unit =
-    actor ! CellActor.RegisterNeighbor(tran, n)
+    actor ! msg.RegisterNeighbor(tran, n)
 }

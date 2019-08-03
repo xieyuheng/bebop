@@ -19,14 +19,33 @@ object BebopApp extends App {
   val z = new Cell()
   val w = new Cell()
 
-  val tran = Tran1[Int, Int] {
+  // val tran = Tran1[Int, Int] {
+  //   case x =>
+  //     x + 1
+  // }
+
+  val tran = Tran1.empty[Int, Int]
+
+  val axy = tran.connect(x, y)
+  val axw = tran.connect(x, w)
+  val ayz = tran.connect(y, z)
+
+  axy ! tran.msg.PutFun {
     case x =>
       x + 1
   }
 
-  tran.connect(x, y)
-  tran.connect(x, w)
-  tran.connect(y, z)
+  axw ! tran.msg.PutFun {
+    case x =>
+      x + 1
+  }
+
+  ayz ! tran.msg.PutFun {
+    case x =>
+      x + 100
+  }
+
+  println (ayz)
 
   x.put(1)
 

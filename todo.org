@@ -1,5 +1,4 @@
 - Tran2
-- Tran use Option
 - macro to use general Tran over function
 - macro to generate Tran1, Tran2, ..., Tran22
 - Interval math
