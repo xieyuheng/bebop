@@ -8,6 +8,7 @@ import akka.event.Logging
 import java.util.UUID
 
 class Cell[E]
+  (name: Option[String] = None)
   (implicit
     lattice: JoinSemilattice[E],
     system: ActorSystem) {
@@ -56,8 +57,15 @@ class Cell[E]
     }
   }
 
-  val sym = UUID.randomUUID().toString
-  private val actor = system.actorOf(CellActor.props, name = sym)
+  val actor = {
+    name match {
+      case Some(name) =>
+        system.actorOf(CellActor.props, name)
+      case None =>
+        val uuid = UUID.randomUUID().toString
+        system.actorOf(CellActor.props, name = uuid)
+    }
+  }
 
   def foreach(f: Option[E] => Unit): Unit =
     actor ! msg.Foreach(f)
@@ -67,4 +75,18 @@ class Cell[E]
 
   def asArgOf(tran: ActorRef, n: Int): Unit =
     actor ! msg.RegisterNeighbor(tran, n)
+}
+
+object Cell {
+  def apply[E]
+    (name: String = "")
+    (implicit
+      lattice: JoinSemilattice[E],
+      system: ActorSystem): Cell[E] = {
+    if (name == "") {
+      new Cell(None)
+    } else {
+      new Cell(Some(name))
+    }
+  }
 }

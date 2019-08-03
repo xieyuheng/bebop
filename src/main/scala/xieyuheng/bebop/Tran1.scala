@@ -30,16 +30,16 @@ class Tran1[A1, R]
     val log = Logging(context.system, this)
 
     private var action: Option[PartialFunction[A1, R]] = None
-    private var arg1Option: Option[A1] = None
+    private var arg1: Option[A1] = None
 
     def receive = {
       case msg.PutFun(fun) =>
         action = Some(fun)
-      case (arg1: A1, 1) =>
+      case (a: A1, 1) =>
         action match {
           case Some(fun) =>
-            arg1Option = Some(arg1)
-            retCell.put(fun(arg1))
+            arg1 = Some(a)
+            retCell.put(fun(a))
           case None =>
             // log.info(s"fun is not ready")
         }

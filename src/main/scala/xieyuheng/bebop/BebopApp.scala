@@ -14,10 +14,10 @@ object BebopApp extends App {
 
   implicit val system = ActorSystem("bebop")
 
-  val x = new Cell()
-  val y = new Cell()
-  val z = new Cell()
-  val w = new Cell()
+  val x = Cell("x")
+  val y = Cell("y")
+  val z = Cell("z")
+  val w = Cell("w")
 
   // val tran = Tran1[Int, Int] {
   //   case x =>
@@ -45,7 +45,9 @@ object BebopApp extends App {
       x + 100
   }
 
-  println (ayz)
+  println(ayz)
+
+  println(x.actor)
 
   x.put(1)
 
