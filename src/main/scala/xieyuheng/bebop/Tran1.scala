@@ -8,7 +8,7 @@ import akka.event.Logging
 import scala.concurrent.duration._
 
 class Tran1[A1, R]
-  (fun: Function1[A1, R])
+  (fun: PartialFunction[A1, R])
   (implicit
     arg1Lattice: JoinSemilattice[A1],
     retLattice: JoinSemilattice[R],
@@ -41,53 +41,10 @@ class Tran1[A1, R]
 }
 
 object Tran1 {
-  def apply[A1, R](fun: Function1[A1, R])
+  def apply[A1, R](fun: PartialFunction[A1, R])
     (implicit
       arg1Lattice: JoinSemilattice[A1],
       retLattice: JoinSemilattice[R],
       system: ActorSystem): Tran1[A1, R] =
     new Tran1(fun)
-}
-
-class Tran2[-A1, -A2, +R]
-  (implicit
-    arg1Lattice: JoinSemilattice[A1],
-    arg2Lattice: JoinSemilattice[A2],
-    retLattice: JoinSemilattice[R],
-    system: ActorSystem) {
-
-  // TODO
-}
-
-object TranApp extends App {
-  implicit val intJoinSemilattice = new JoinSemilattice[Int] {
-    def join(a: Int, b: Int) = a
-  }
-
-  implicit val system = ActorSystem("bebop")
-
-  val x = new Cell()
-  val y = new Cell()
-  val z = new Cell()
-  val w = new Cell()
-
-  val tran = Tran1[Int, Int] {
-    case x =>
-      x + 1
-  }
-
-  tran.connect(x, y)
-  tran.connect(x, w)
-  tran.connect(y, z)
-
-  x.put(1)
-
-  import system.dispatcher
-
-  system.scheduler.scheduleOnce(500.millis) {
-    x.foreach { content => println(s"x: ${content}") }
-    y.foreach { content => println(s"y: ${content}") }
-    z.foreach { content => println(s"z: ${content}") }
-    w.foreach { content => println(s"w: ${content}") }
-  }
 }

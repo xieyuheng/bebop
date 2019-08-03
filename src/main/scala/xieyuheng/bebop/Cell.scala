@@ -63,19 +63,3 @@ class Cell[E]
   def asArgOf(tran: ActorRef, n: Int): Unit =
     actor ! CellActor.RegisterNeighbor(tran, n)
 }
-
-object CellApp extends App {
-  implicit val intJoinSemilattice = new JoinSemilattice[Int] {
-    def join(a: Int, b: Int) = a
-  }
-
-  implicit val system = ActorSystem("bebop")
-
-  val cell = new Cell()
-
-  cell.foreach(println)
-  cell.put(123)
-  cell.foreach(println)
-  cell.put(123123)
-  cell.foreach(println)
-}
