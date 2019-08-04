@@ -1,5 +1,3 @@
-- PrimtiveTran1
-- Tran1 as trait
 - ComposedTran1
 - tests
 - Tran2
