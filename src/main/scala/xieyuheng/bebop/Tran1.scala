@@ -10,7 +10,10 @@ import scala.concurrent.duration._
 import java.util.UUID
 
 sealed trait Tran1[A1, R] {
-  def connect(arg1Cell: Cell[A1], retCell: Cell[R], name: String = ""): Propagator
+  def connect
+    (arg1Cell: Cell[A1],
+      retCell: Cell[R],
+      name: String = ""): Propagator
 
   def $
     (arg1Cell: Cell[A1],
