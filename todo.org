@@ -1,4 +1,7 @@
+- EmptyTran1
+- SumTran1
 - CompoundTran1
+- Tran1 extends Cell
 - tests
 - Tran2
 - read akka actor docs, and see what's more can we do for our bebop

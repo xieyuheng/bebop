@@ -9,8 +9,8 @@ import scala.concurrent.duration._
 
 import java.util.UUID
 
-class PrimtiveTran1[A1, R]
-  (initAction: Option[PartialFunction[A1, R]] = None)
+case class PrimtiveTran1[A1, R]
+  (fun: PartialFunction[A1, R])
   (implicit
     val arg1Lattice: JoinSemilattice[A1],
     val retLattice: JoinSemilattice[R],
@@ -21,28 +21,16 @@ class PrimtiveTran1[A1, R]
       Props(new PrimtiveTran1Actor(arg1Cell, retCell))
   }
 
-  object msg {
-    case class PutFun(fun: PartialFunction[A1, R])
-  }
-
   private class PrimtiveTran1Actor(arg1Cell: Cell[A1], retCell: Cell[R]) extends Actor {
 
     val log = Logging(context.system, this)
 
-    private var action: Option[PartialFunction[A1, R]] = None
     private var arg1: Option[A1] = None
 
     def receive = {
-      case msg.PutFun(fun) =>
-        action = Some(fun)
       case (a: A1, 1) =>
-        action match {
-          case Some(fun) =>
-            arg1 = Some(a)
-            retCell.put(fun(a))
-          case None =>
-            // log.info(s"fun is not ready")
-        }
+        arg1 = Some(a)
+        retCell.put(fun(a))
       case msg =>
         log.info(s"received unknown message: ${msg}")
     }
@@ -56,26 +44,8 @@ class PrimtiveTran1[A1, R]
       system.actorOf(PrimtiveTran1Actor.props(arg1Cell, retCell), name)
     }
 
-    initAction.foreach { fun => actor ! msg.PutFun(fun) }
-
     val propagator = Propagator(actor)
     arg1Cell.asArgOf(propagator, 1)
     propagator
   }
-}
-
-object PrimtiveTran1 {
-  def empty[A1, R]
-    (implicit
-      arg1Lattice: JoinSemilattice[A1],
-      retLattice: JoinSemilattice[R],
-      system: ActorSystem): PrimtiveTran1[A1, R] =
-    new PrimtiveTran1(None)
-
-  def apply[A1, R](fun: PartialFunction[A1, R])
-    (implicit
-      arg1Lattice: JoinSemilattice[A1],
-      retLattice: JoinSemilattice[R],
-      system: ActorSystem): PrimtiveTran1[A1, R] =
-    new PrimtiveTran1(Some(fun))
 }
