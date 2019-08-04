@@ -15,17 +15,17 @@ object BebopApp extends App {
   implicit val system = ActorSystem("bebop")
 
   // {
-  //   val x = Cell("x")
-  //   val y = Cell("y")
-  //   val z = Cell("z")
-  //   val w = Cell("w")
+  //   val x = ValueCell("x")
+  //   val y = ValueCell("y")
+  //   val z = ValueCell("z")
+  //   val w = ValueCell("w")
 
-  //   // val tran = Tran1[Int, Int] {
+  //   // val tran = PrimtiveTran1[Int, Int] {
   //   //   case x =>
   //   //     x + 1
   //   // }
 
-  //   val tran = Tran1.empty[Int, Int]
+  //   val tran = PrimtiveTran1.empty[Int, Int]
 
   //   val axy = tran.connect(x, y, "xy")
   //   val axw = tran.connect(x, w, "xw")
@@ -63,9 +63,9 @@ object BebopApp extends App {
   // }
 
   // {
-  //   val x = Cell("x")
+  //   val x = ValueCell("x")
 
-  //   val tran = Tran1[Int, Int] {
+  //   val tran = PrimtiveTran1[Int, Int] {
   //     case x =>
   //       x + 1
   //   }
@@ -91,9 +91,9 @@ object BebopApp extends App {
   // }
 
   {
-    val x = Cell("x")
+    val x = ValueCell("x")
 
-    val tran = Tran1[Int, Int] {
+    val tran = PrimtiveTran1[Int, Int] {
       case x =>
         x + 1
     }

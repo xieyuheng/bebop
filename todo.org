@@ -1,4 +1,4 @@
-- ComposedTran1
+- CompoundTran1
 - tests
 - Tran2
 - read akka actor docs, and see what's more can we do for our bebop
