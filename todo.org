@@ -1,17 +1,18 @@
-- EmptyTran1
-- SumTran1
-- CompoundTran1
-- Tran1 extends Cell
-- tests
-- Tran2
-- read akka actor docs, and see what's more can we do for our bebop
-- compose connectionName from cellName
+- CompoundTran1[A1, R]
+- EmptyTran1[A1, R]
+- SumTran1[A1, R]
+- JoinSemilattice[Tran1[A1, R]] -- use SumTran1
+- Tran1[A1, R] extends Cell[Tran1[A1, R]]
+- Tran2[A1, A2, R]
+* test
+- basic test for Tran1
+* datatype
+- Interval math
+* macro
 - macro to use general Tran over PartialFunction
 - macro `Tran` to generate Tran1, Tran2, ..., Tran22
-- Interval math
-- PartialFunction as JoinSemilattice
-  or lose the condition of JoinSemilattice for PartialFunction
-  because PartialFunction might can not be viewed as JoinSemilattice
+* read akka actor docs
+- see what's more can we do for our bebop
 * examples
 - from the art
 - from the revised report
