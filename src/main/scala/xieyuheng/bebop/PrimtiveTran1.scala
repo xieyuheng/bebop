@@ -5,8 +5,6 @@ import xieyuheng.pracat.JoinSemilattice
 import akka.actor.{ Actor, ActorRef, ActorSystem, Props, PoisonPill }
 import akka.event.Logging
 
-import scala.concurrent.duration._
-
 import java.util.UUID
 
 case class PrimtiveTran1[A1, R]
