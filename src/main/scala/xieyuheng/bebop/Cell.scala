@@ -20,14 +20,14 @@ class Cell[E]
   object msg {
     case class Foreach(f: Option[E] => Unit)
     case class Put(value: E)
-    case class RegisterNeighbor(neighbor: ActorRef, n: Int)
+    case class RegisterPropagator(propagator: Propagator, n: Int)
   }
 
   private class CellActor extends Actor {
 
     val log = Logging(context.system, this)
 
-    private var neighbors: List[(ActorRef, Int)] = Nil
+    private var propagatorInfo: List[(Propagator, Int)] = Nil
 
     private var content: Option[E] = None
 
@@ -39,8 +39,8 @@ class Cell[E]
 
       if (content != Some(c)) {
         content = Some(c)
-        neighbors.foreach { case (neighbor, n) =>
-          neighbor ! (c, n)
+        propagatorInfo.foreach { case (propagator, n) =>
+          propagator.updateArg(c, n)
         }
       }
     }
@@ -50,8 +50,8 @@ class Cell[E]
         f(content)
       case msg.Put(a) =>
         join(a)
-      case msg.RegisterNeighbor(neighbor, n) =>
-        neighbors = (neighbor, n) :: neighbors
+      case msg.RegisterPropagator(propagator, n) =>
+        propagatorInfo = (propagator, n) :: propagatorInfo
       case msg =>
         log.info(s"received unknown message: ${msg}")
     }
@@ -73,8 +73,8 @@ class Cell[E]
   def put(a: E): Unit =
     actor ! msg.Put(a)
 
-  def asArgOf(tran: ActorRef, n: Int): Unit =
-    actor ! msg.RegisterNeighbor(tran, n)
+  def asArgOf(propagator: Propagator, n: Int): Unit =
+    actor ! msg.RegisterPropagator(propagator, n)
 }
 
 object Cell {

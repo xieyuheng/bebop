@@ -48,7 +48,7 @@ class Tran1[A1, R]
     }
   }
 
-  def connect(arg1Cell: Cell[A1], retCell: Cell[R], name: String = ""): ActorRef = {
+  def connect(arg1Cell: Cell[A1], retCell: Cell[R], name: String = ""): Propagator = {
     val actor = if (name == "") {
       val uuid = UUID.randomUUID().toString
       system.actorOf(Tran1Actor.props(arg1Cell, retCell), name = uuid)
@@ -57,27 +57,28 @@ class Tran1[A1, R]
     }
 
     initAction.foreach { fun => actor ! msg.PutFun(fun) }
-    arg1Cell.asArgOf(actor, 1)
-    actor
+    val propagator = Propagator(actor)
+    arg1Cell.asArgOf(propagator, 1)
+    propagator
   }
 
   def $ (
     arg1Cell: Cell[A1],
-    connectionName: String = "",
+    propagatorName: String = "",
     cellName: String = "",
-  ): (ActorRef, Cell[R]) = {
+  ): (Propagator, Cell[R]) = {
     val retCell = Cell[R](cellName)
-    val connection = connect(arg1Cell, retCell, connectionName)
-    (connection, retCell)
+    val propagator = connect(arg1Cell, retCell, propagatorName)
+    (propagator, retCell)
   }
 
   def apply (
     arg1Cell: Cell[A1],
-    connectionName: String = "",
+    propagatorName: String = "",
     cellName: String = "",
   ): Cell[R] = {
     val retCell = Cell[R](cellName)
-    connect(arg1Cell, retCell, connectionName)
+    connect(arg1Cell, retCell, propagatorName)
     retCell
   }
 }
