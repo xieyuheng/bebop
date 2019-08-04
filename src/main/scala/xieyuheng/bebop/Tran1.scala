@@ -9,23 +9,23 @@ import scala.concurrent.duration._
 
 import java.util.UUID
 
-class Tran1[A1, R]
+class PrimtiveTran1[A1, R]
   (initAction: Option[PartialFunction[A1, R]] = None)
   (implicit
     arg1Lattice: JoinSemilattice[A1],
     retLattice: JoinSemilattice[R],
     system: ActorSystem) {
 
-  private object Tran1Actor {
+  private object PrimtiveTran1Actor {
     def props(arg1Cell: Cell[A1], retCell: Cell[R]) =
-      Props(new Tran1Actor(arg1Cell, retCell))
+      Props(new PrimtiveTran1Actor(arg1Cell, retCell))
   }
 
   object msg {
     case class PutFun(fun: PartialFunction[A1, R])
   }
 
-  private class Tran1Actor(arg1Cell: Cell[A1], retCell: Cell[R]) extends Actor {
+  private class PrimtiveTran1Actor(arg1Cell: Cell[A1], retCell: Cell[R]) extends Actor {
 
     val log = Logging(context.system, this)
 
@@ -51,12 +51,13 @@ class Tran1[A1, R]
   def connect(arg1Cell: Cell[A1], retCell: Cell[R], name: String = ""): Propagator = {
     val actor = if (name == "") {
       val uuid = UUID.randomUUID().toString
-      system.actorOf(Tran1Actor.props(arg1Cell, retCell), name = uuid)
+      system.actorOf(PrimtiveTran1Actor.props(arg1Cell, retCell), name = uuid)
     } else {
-      system.actorOf(Tran1Actor.props(arg1Cell, retCell), name)
+      system.actorOf(PrimtiveTran1Actor.props(arg1Cell, retCell), name)
     }
 
     initAction.foreach { fun => actor ! msg.PutFun(fun) }
+
     val propagator = Propagator(actor)
     arg1Cell.asArgOf(propagator, 1)
     propagator
@@ -88,13 +89,13 @@ object Tran1 {
     (implicit
       arg1Lattice: JoinSemilattice[A1],
       retLattice: JoinSemilattice[R],
-      system: ActorSystem): Tran1[A1, R] =
-    new Tran1(None)
+      system: ActorSystem): PrimtiveTran1[A1, R] =
+    new PrimtiveTran1(None)
 
   def apply[A1, R](fun: PartialFunction[A1, R])
     (implicit
       arg1Lattice: JoinSemilattice[A1],
       retLattice: JoinSemilattice[R],
-      system: ActorSystem): Tran1[A1, R] =
-    new Tran1(Some(fun))
+      system: ActorSystem): PrimtiveTran1[A1, R] =
+    new PrimtiveTran1(Some(fun))
 }
