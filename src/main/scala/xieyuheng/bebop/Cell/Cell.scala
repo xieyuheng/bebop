@@ -13,4 +13,6 @@ trait Cell[E] {
   def put(a: E): Unit
 
   def asArgOf(propagator: Propagator, n: Int): Unit
+
+  def forward(cell: Cell[E]): Unit
 }

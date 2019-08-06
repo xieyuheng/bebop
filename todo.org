@@ -1,6 +1,5 @@
-- CompoundTran1[A1, R]
 - EmptyTran1[A1, R]
-- SumTran1[A1, R]
+- Sum1[A1, R]
 - JoinSemilattice[Tran1[A1, R]] -- use SumTran1
 - Tran1[A1, R] extends Cell[Tran1[A1, R]]
 - Tran2[A1, A2, R]

@@ -13,24 +13,13 @@ trait Tran1[A1, R]
 
   def connect
     (arg1Cell: Cell[A1],
-      retCell: Cell[R],
-      name: String = ""): Propagator
-
-  def $
-    (arg1Cell: Cell[A1],
-      propagatorName: String = "",
-      cellName: String = ""): (Propagator, Cell[R]) = {
-    val retCell = ValueCell[R](cellName)
-    val propagator = connect(arg1Cell, retCell, propagatorName)
-    (propagator, retCell)
-  }
+      retCell: Cell[R]): Unit
 
   def apply
     (arg1Cell: Cell[A1],
-      propagatorName: String = "",
       cellName: String = ""): Cell[R] = {
     val retCell = ValueCell[R](cellName)
-    connect(arg1Cell, retCell, propagatorName)
+    connect(arg1Cell, retCell)
     retCell
   }
 

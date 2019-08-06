@@ -14,93 +14,78 @@ object BebopApp extends App {
 
   implicit val system = ActorSystem("bebop")
 
-  // {
-  //   val x = ValueCell("x")
-  //   val y = ValueCell("y")
-  //   val z = ValueCell("z")
-  //   val w = ValueCell("w")
-
-  //   // val tran = PrimtiveTran1[Int, Int] {
-  //   //   case x =>
-  //   //     x + 1
-  //   // }
-
-  //   val tran = PrimtiveTran1.empty[Int, Int]
-
-  //   val axy = tran.connect(x, y, "xy")
-  //   val axw = tran.connect(x, w, "xw")
-  //   val ayz = tran.connect(y, z, "yz")
-
-  //   axy ! tran.msg.PutFun {
-  //     case x =>
-  //       x + 1
-  //   }
-
-  //   axw ! tran.msg.PutFun {
-  //     case x =>
-  //       x + 1
-  //   }
-
-  //   ayz ! tran.msg.PutFun {
-  //     case x =>
-  //       x + 100
-  //   }
-
-  //   println(ayz)
-
-  //   println(x.actor)
-
-  //   x.put(1)
-
-  //   import system.dispatcher
-
-  //   system.scheduler.scheduleOnce(500.millis) {
-  //     x.foreach { content => println(s"x: ${content}") }
-  //     y.foreach { content => println(s"y: ${content}") }
-  //     z.foreach { content => println(s"z: ${content}") }
-  //     w.foreach { content => println(s"w: ${content}") }
-  //   }
-  // }
 
   // {
-  //   val x = ValueCell("x")
+//     val x = ValueCell("x")
 
-  //   val tran = PrimtiveTran1[Int, Int] {
-  //     case x =>
-  //       x + 1
-  //   }
+//     val tran = Fn1[Int, Int] {
+//       case x =>
+//         x + 1
+//     }
 
-  //   val (xy, y) = tran $ x
-  //   val (xw, w) = tran $ x
-  //   val (yz, z) = tran $ y
+//     val y = tran(x)
+//     val w = tran(x)
+//     val z = tran(y)
 
-  //   println(yz)
+//     x.put(1)
 
-  //   println(x.actor)
+//     import system.dispatcher
 
-  //   x.put(1)
+//     system.scheduler.scheduleOnce(500.millis) {
+//       x.foreach { content => println(s"x: ${content}") }
+//       y.foreach { content => println(s"y: ${content}") }
+//       z.foreach { content => println(s"z: ${content}") }
+//       w.foreach { content => println(s"w: ${content}") }
+//     }
+//   }
 
-  //   import system.dispatcher
+//   {
+//     val x = ValueCell("x")
 
-  //   system.scheduler.scheduleOnce(500.millis) {
-  //     x.foreach { content => println(s"x: ${content}") }
-  //     y.foreach { content => println(s"y: ${content}") }
-  //     z.foreach { content => println(s"z: ${content}") }
-  //     w.foreach { content => println(s"w: ${content}") }
-  //   }
-  // }
+//     val add1 = Fn1[Int, Int] {
+//       case x =>
+//         x + 1
+//     }
+
+//     val add2 = Tr1[Int, Int] {
+//       case (a, o) =>
+//         val b = ValueCell()
+//         add1.connect(a, b)
+//         add1.connect(b, o)
+//     }
+
+//     val y = add2(x)
+//     val w = add2(x)
+//     val z = add2(y)
+
+//     x.put(1)
+
+//     import system.dispatcher
+
+//     system.scheduler.scheduleOnce(500.millis) {
+//       x.foreach { content => println(s"x: ${content}") }
+//       y.foreach { content => println(s"y: ${content}") }
+//       z.foreach { content => println(s"z: ${content}") }
+//       w.foreach { content => println(s"w: ${content}") }
+//     }
+//   }
 
   {
     val x = ValueCell("x")
 
-    val tran = PrimtiveTran1[Int, Int] {
+    val add1 = Fn1[Int, Int] {
       case x =>
         x + 1
     }
 
-    val y = tran(x)
-    val w = tran(x)
-    val z = tran(y)
+    val add2 = Ap1[Int, Int] {
+      case a =>
+        add1(add1(a))
+    }
+
+    val y = add2(x)
+    val w = add2(x)
+    val z = add2(y)
 
     x.put(1)
 
