@@ -27,9 +27,11 @@ trait Tran1[A1, R]
 
   // implicit val lattice: JoinSemilattice[Tran1[A1, R]] = ???
 
-  // def foreach(f: Option[Tran1[A1, R]] => Unit): Unit = ???
+  def foreach(f: Option[Tran1[A1, R]] => Unit): Unit = ???
 
-  // def put(a: Tran1[A1, R]): Unit = ???
+  def put(a: Tran1[A1, R]): Unit = ???
 
-  // def asArgOf(propagator: Propagator, n: Int): Unit = ???
+  def asArgOf(propagator: Propagator, n: Int): Unit = ???
+
+  def forward(cell: Cell[Tran1[A1, R]]): Unit = ???
 }
