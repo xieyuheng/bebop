@@ -16,10 +16,8 @@ scalacOptions ++= Seq(
   "-encoding", "UTF-8",
   "-unchecked",
   "-feature",
-  // "-language:implicitConversions",
-  // "-language:postfixOps",
+  "-language:implicitConversions",
   "-Ywarn-dead-code",
-  // "-Xfatal-warnings",
 )
 
 libraryDependencies ++= Seq(
