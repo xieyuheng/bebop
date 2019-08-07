@@ -8,7 +8,6 @@ import akka.event.Logging
 import java.util.UUID
 
 class ValueCell[E]
-  (name: Option[String] = None)
   (implicit
     val lattice: JoinSemilattice[E],
     val system: ActorSystem) extends Cell[E] {
@@ -67,13 +66,8 @@ class ValueCell[E]
   }
 
   val actor = {
-    name match {
-      case Some(name) =>
-        system.actorOf(ValueCellActor.props, name)
-      case None =>
-        val uuid = UUID.randomUUID().toString
-        system.actorOf(ValueCellActor.props, name = uuid)
-    }
+    val uuid = UUID.randomUUID().toString
+    system.actorOf(ValueCellActor.props, name = uuid)
   }
 
   def foreach(f: Option[E] => Unit): Unit =

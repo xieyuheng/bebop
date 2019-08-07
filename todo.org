@@ -1,9 +1,10 @@
+- Tran1Cell extends Cell[Tran1[A1, R]]
+  - Tran1Cell.lattics
 - short names in api
-* the propagator model
 - Em1[A1, R]
 - Su1[A1, R]
 - JoinSemilattice[Tran1[A1, R]] -- use Su1
-- Tran1Cell extends Cell[Tran1[A1, R]]
+* the propagator model
 - Tran2[A1, A2, R]
 * datatype
 - Interval math
