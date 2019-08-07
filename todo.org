@@ -1,4 +1,3 @@
-- basic test for Tran1
 - short names in api
 * the propagator model
 - Em1[A1, R]
