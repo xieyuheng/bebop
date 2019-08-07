@@ -19,15 +19,13 @@ case class Fn1[A1, R]
       Props(new Fn1Actor(arg1Cell, retCell))
   }
 
-  private class Fn1Actor(arg1Cell: Cell[A1], retCell: Cell[R]) extends Actor {
+  private class Fn1Actor
+    (arg1Cell: Cell[A1], retCell: Cell[R]) extends Actor {
 
     val log = Logging(context.system, this)
 
-    private var arg1: Option[A1] = None
-
     def receive = {
       case (a: A1, 1) =>
-        arg1 = Some(a)
         retCell.put(fn(a))
       case msg =>
         log.info(s"received unknown message: ${msg}")
