@@ -2,8 +2,9 @@
 - Tran3[A1, A2, A3, R]
 * datatype
 - Interval math
+- default JoinSemilattice for basic types
 * macro
-- macro to use general Tran over PartialFunction
+- macro to use general Tran
 - macro `Tran` to generate Tran1, Tran2, ..., Tran22
 * read akka actor docs
 - see what's more can we do for our bebop

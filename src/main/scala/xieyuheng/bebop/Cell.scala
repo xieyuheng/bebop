@@ -83,4 +83,9 @@ case class Cell[E]()
 
   def forward(cell: Cell[E]): Unit =
     actor ! msg.RegisterCell(cell)
+
+  def unify(cell: Cell[E]): Unit = {
+    cell.forward(this)
+    this.forward(cell)
+  }
 }
