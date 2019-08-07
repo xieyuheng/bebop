@@ -12,8 +12,9 @@ case class Ap1[A1, R]
     val system: ActorSystem) extends Tran1[A1, R] {
 
   def connect(arg1Cell: Cell[A1], retCell: Cell[R]): Unit = {
-    val retCell = new ValueCell[R]
-    applier(arg1Cell).forward(retCell)
+    val newCell = applier(arg1Cell)
+    newCell.forward(retCell)
+    retCell.forward(newCell)
   }
 
   override def apply(arg1Cell: Cell[A1]): Cell[R] = {

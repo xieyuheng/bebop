@@ -7,13 +7,13 @@ import akka.event.Logging
 
 import java.util.UUID
 
-class ValueCell[E]
+case class Cell[E]()
   (implicit
-    val lattice: JoinSemilattice[E],
-    val system: ActorSystem) extends Cell[E] {
+    lattice: JoinSemilattice[E],
+    system: ActorSystem) {
 
-  private object ValueCellActor {
-    def props = Props(new ValueCellActor)
+  private object CellActor {
+    def props = Props(new CellActor)
   }
 
   object msg {
@@ -23,7 +23,7 @@ class ValueCell[E]
     case class RegisterCell(cell: Cell[E])
   }
 
-  private class ValueCellActor extends Actor {
+  private class CellActor extends Actor {
 
     val log = Logging(context.system, this)
 
@@ -67,14 +67,16 @@ class ValueCell[E]
 
   val actor = {
     val uuid = UUID.randomUUID().toString
-    system.actorOf(ValueCellActor.props, name = uuid)
+    system.actorOf(CellActor.props, name = uuid)
   }
 
   def foreach(f: Option[E] => Unit): Unit =
     actor ! msg.Foreach(f)
 
-  def put(a: E): Unit =
+  def put(a: E): Cell[E] = {
     actor ! msg.Put(a)
+    this
+  }
 
   def asArgOf(propagator: Propagator, n: Int): Unit =
     actor ! msg.RegisterPropagator(propagator, n)

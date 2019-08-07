@@ -14,7 +14,7 @@ trait Tran1[A1, R] {
       retCell: Cell[R]): Unit
 
   def apply(arg1Cell: Cell[A1]): Cell[R] = {
-    val retCell = new ValueCell[R]
+    val retCell = new Cell[R]
     connect(arg1Cell, retCell)
     retCell
   }

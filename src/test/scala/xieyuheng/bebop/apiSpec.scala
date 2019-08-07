@@ -1,4 +1,5 @@
 import org.scalatest._
+
 import xieyuheng.bebop._
 
 import xieyuheng.pracat.JoinSemilattice
@@ -21,7 +22,7 @@ class apiSpec extends FlatSpec with Matchers {
   val Blink = 10.millis
 
   "Fn1" can "build propagator" in {
-    val x = new ValueCell
+    val x = Cell()
 
     val add1 = Fn1[Int, Int] {
       case x =>
@@ -34,7 +35,7 @@ class apiSpec extends FlatSpec with Matchers {
 
     x.put(1)
 
-    system.scheduler.scheduleOnce((10).millis) {
+    system.scheduler.scheduleOnce(Blink) {
       x.foreach { content => assert(content == Some(1)) }
       y.foreach { content => assert(content == Some(2)) }
       z.foreach { content => assert(content == Some(3)) }
@@ -42,17 +43,17 @@ class apiSpec extends FlatSpec with Matchers {
     }
   }
 
-  "Tr1" can "build propagator" in {
-    val x = new ValueCell
+  "Cn1" can "build propagator" in {
+    val x = Cell()
 
     val add1 = Fn1[Int, Int] {
       case x =>
         x + 1
     }
 
-    val add2 = Tr1[Int, Int] {
+    val add2 = Cn1[Int, Int] {
       case (a, o) =>
-        val b = new ValueCell
+        val b = Cell()
         add1.connect(a, b)
         add1.connect(b, o)
     }
@@ -72,7 +73,7 @@ class apiSpec extends FlatSpec with Matchers {
   }
 
   "Ap1" can "build propagator" in {
-    val x = new ValueCell
+    val x = Cell()
 
     val add1 = Fn1[Int, Int] {
       case x =>

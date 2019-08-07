@@ -4,7 +4,7 @@ import xieyuheng.pracat.JoinSemilattice
 
 import akka.actor.ActorSystem
 
-case class Tr1[A1, R]
+case class Cn1[A1, R]
   (connector: (Cell[A1], Cell[R]) => Unit)
   (implicit
     val arg1Lattice: JoinSemilattice[A1],
