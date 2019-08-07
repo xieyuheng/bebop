@@ -1,9 +1,10 @@
 - basic test for Tran1
+- short names in api
 * the propagator model
-- EmptyTran1[A1, R]
-- Sum1[A1, R]
-- JoinSemilattice[Tran1[A1, R]] -- use SumTran1
-- Tran1[A1, R] extends Cell[Tran1[A1, R]]
+- Em1[A1, R]
+- Su1[A1, R]
+- JoinSemilattice[Tran1[A1, R]] -- use Su1
+- Tran1Cell extends Cell[Tran1[A1, R]]
 - Tran2[A1, A2, R]
 * datatype
 - Interval math

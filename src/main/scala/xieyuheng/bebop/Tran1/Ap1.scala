@@ -11,15 +11,12 @@ case class Ap1[A1, R]
     val retLattice: JoinSemilattice[R],
     val system: ActorSystem) extends Tran1[A1, R] {
 
-  def connect
-    (arg1Cell: Cell[A1],
-      retCell: Cell[R]): Unit = {
-    val retCell = ValueCell[R]()
+  def connect(arg1Cell: Cell[A1], retCell: Cell[R]): Unit = {
+    val retCell = new ValueCell[R]
     applier(arg1Cell).forward(retCell)
   }
 
-  def apply
-    (arg1Cell: Cell[A1]): Cell[R] = {
+  override def apply(arg1Cell: Cell[A1]): Cell[R] = {
     applier(arg1Cell)
   }
 }

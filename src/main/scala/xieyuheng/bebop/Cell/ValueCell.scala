@@ -88,17 +88,3 @@ class ValueCell[E]
   def forward(cell: Cell[E]): Unit =
     actor ! msg.RegisterCell(cell)
 }
-
-object ValueCell {
-  def apply[E]
-    (name: String = "")
-    (implicit
-      lattice: JoinSemilattice[E],
-      system: ActorSystem): ValueCell[E] = {
-    if (name == "") {
-      new ValueCell(None)
-    } else {
-      new ValueCell(Some(name))
-    }
-  }
-}

@@ -16,7 +16,7 @@ object BebopApp extends App {
 
 
   // {
-//     val x = ValueCell("x")
+//     val x = new ValueCell
 
 //     val tran = Fn1[Int, Int] {
 //       case x =>
@@ -40,7 +40,7 @@ object BebopApp extends App {
 //   }
 
 //   {
-//     val x = ValueCell("x")
+//     val x = new ValueCell
 
 //     val add1 = Fn1[Int, Int] {
 //       case x =>
@@ -49,7 +49,7 @@ object BebopApp extends App {
 
 //     val add2 = Tr1[Int, Int] {
 //       case (a, o) =>
-//         val b = ValueCell()
+//         val b = new ValueCell
 //         add1.connect(a, b)
 //         add1.connect(b, o)
 //     }
@@ -71,7 +71,7 @@ object BebopApp extends App {
 //   }
 
   {
-    val x = ValueCell("x")
+    val x = new ValueCell
 
     val add1 = Fn1[Int, Int] {
       case x =>
