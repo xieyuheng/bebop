@@ -8,8 +8,8 @@ import akka.event.Logging
 import scala.concurrent.duration._
 
 class heronSpec extends FlatSpec with Matchers {
-  implicit val newReplaceOldDouble = JoinAble.newReplaceOld[Double]
-  implicit val newReplaceOldBoolean = JoinAble.newReplaceOld[Boolean]
+  implicit val newReplaceOldDouble = Join.newReplaceOld[Double]
+  implicit val newReplaceOldBoolean = Join.newReplaceOld[Boolean]
   implicit val system = ActorSystem("heronSpec")
 
   import system.dispatcher
@@ -42,7 +42,21 @@ class heronSpec extends FlatSpec with Matchers {
 
     def sqrtIter = Cn2[Double, Double, Double] {
       case (x, guess, answer) =>
+        // Tran.switch(control, input, output)
         ???
     }
   }
+
+  // it can "implement factorial" in {
+  //   def factorial = Ap1[Double, Double] {
+  //     case n =>
+  //       val zero = Cell[Double]().put(0)
+  //       val one = Cell[Double]().put(1)
+  //       ife (equal(zero, n)) {
+  //         one
+  //       } {
+  //         mul(n, factorial(sub(n, one)))
+  //       }
+  //   }
+  // }
 }

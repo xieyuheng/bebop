@@ -8,7 +8,7 @@ import akka.event.Logging
 import scala.concurrent.duration._
 
 class bebopSpec extends FlatSpec with Matchers {
-  implicit val newReplaceOldDouble = JoinAble.newReplaceOld[Double]
+  implicit val newReplaceOldDouble = Join.newReplaceOld[Double]
   implicit val system = ActorSystem("bebopSpec")
 
   import system.dispatcher

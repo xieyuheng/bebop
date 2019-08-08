@@ -10,9 +10,9 @@ import java.util.UUID
 case class Fn2[A1, A2, R]
   (fn: PartialFunction[(A1, A2), R])
   (implicit
-    val arg1Lattice: JoinAble[A1],
-    val arg2Lattice: JoinAble[A2],
-    val retLattice: JoinAble[R],
+    val arg1Join: Join[A1],
+    val arg2Join: Join[A2],
+    val retJoin: Join[R],
     val system: ActorSystem) extends Tran2[A1, A2, R] {
 
   private object Fn2Actor {

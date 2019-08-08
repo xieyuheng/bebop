@@ -5,9 +5,9 @@ import akka.actor.ActorSystem
 case class Cn2[A1, A2, R]
   (connector: (Cell[A1], Cell[A2], Cell[R]) => Unit)
   (implicit
-    val arg1Lattice: JoinAble[A1],
-    val arg2Lattice: JoinAble[A2],
-    val retLattice: JoinAble[R],
+    val arg1Join: Join[A1],
+    val arg2Join: Join[A2],
+    val retJoin: Join[R],
     val system: ActorSystem) extends Tran2[A1, A2, R] {
 
   def connect

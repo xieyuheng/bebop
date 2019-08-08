@@ -8,8 +8,8 @@ import java.util.UUID
 case class Fn1[A1, R]
   (fn: PartialFunction[A1, R])
   (implicit
-    val arg1Lattice: JoinAble[A1],
-    val retLattice: JoinAble[R],
+    val arg1Join: Join[A1],
+    val retJoin: Join[R],
     val system: ActorSystem) extends Tran1[A1, R] {
 
   private object Fn1Actor {

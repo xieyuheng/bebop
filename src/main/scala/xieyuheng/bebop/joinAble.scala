@@ -1,11 +1,11 @@
 package xieyuheng.bebop
 
-trait JoinAble[E] {
+trait Join[E] {
   def join(left: E, right: E): E
 }
 
-object JoinAble {
-  def newReplaceOld[E] = new JoinAble[E] {
+object Join {
+  def newReplaceOld[E] = new Join[E] {
     def join(left: E, right: E): E = right
   }
 }
