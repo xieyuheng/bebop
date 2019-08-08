@@ -8,11 +8,8 @@ import akka.event.Logging
 import scala.concurrent.duration._
 
 class heronSpec extends FlatSpec with Matchers {
-
-  implicit val newReplaceOldDouble = new JoinAble[Double] {
-    def join(a: Double, b: Double) = b
-  }
-
+  implicit val newReplaceOldDouble = JoinAble.newReplaceOld[Double]
+  implicit val newReplaceOldBoolean = JoinAble.newReplaceOld[Boolean]
   implicit val system = ActorSystem("heronSpec")
 
   import system.dispatcher
@@ -21,11 +18,11 @@ class heronSpec extends FlatSpec with Matchers {
 
   "propagator model" can "implement heron step" in {
     val heronStep = Fn2[Double, Double, Double] {
-      case (x, g) => (g + x / g) / 2
+      case (x, guess) => (guess + x / guess) / 2
     }
 
-    val x = Cell()
-    val guess = Cell()
+    val x = Cell[Double]()
+    val guess = Cell[Double]()
     val betterGuess = heronStep(x, guess)
 
     x.put(2)
@@ -36,7 +33,16 @@ class heronSpec extends FlatSpec with Matchers {
     }
   }
 
-  it can "implement sqrtIter" in {
+  it can "implement sqrt by sqrtIter" in {
+    def sqrt = Ap1[Double, Double] {
+      case x =>
+        val guess = Cell[Double]().put(1)
+        sqrtIter(x, guess)
+    }
 
+    def sqrtIter = Cn2[Double, Double, Double] {
+      case (x, guess, answer) =>
+        ???
+    }
   }
 }
