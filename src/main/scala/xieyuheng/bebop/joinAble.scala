@@ -1,5 +1,5 @@
 package xieyuheng.bebop
 
-trait joinAble[E] {
+trait JoinAble[E] {
   def join(left: E, right: E): E
 }

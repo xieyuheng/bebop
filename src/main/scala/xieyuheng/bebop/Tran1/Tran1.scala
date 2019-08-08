@@ -3,8 +3,8 @@ package xieyuheng.bebop
 import akka.actor.ActorSystem
 
 trait Tran1[A1, R] {
-  implicit val arg1Lattice: joinAble[A1]
-  implicit val retLattice: joinAble[R]
+  implicit val arg1Lattice: JoinAble[A1]
+  implicit val retLattice: JoinAble[R]
   implicit val system: ActorSystem
 
   def connect

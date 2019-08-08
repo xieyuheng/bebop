@@ -7,7 +7,7 @@ import java.util.UUID
 
 case class Cell[E]()
   (implicit
-    lattice: joinAble[E],
+    joinAble: JoinAble[E],
     system: ActorSystem) {
 
   private object CellActor {
@@ -32,7 +32,7 @@ case class Cell[E]()
 
     private def join(value: E) = {
       val newValue = content match {
-        case Some(oldValue) => lattice.join(oldValue, value)
+        case Some(oldValue) => joinAble.join(oldValue, value)
         case None => value
       }
 

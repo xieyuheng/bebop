@@ -9,7 +9,7 @@ import scala.concurrent.duration._
 
 class bebopSpec extends FlatSpec with Matchers {
 
-  implicit val newReplaceOldDouble = new joinAble[Double] {
+  implicit val newReplaceOldDouble = new JoinAble[Double] {
     def join(a: Double, b: Double) = b
   }
 
