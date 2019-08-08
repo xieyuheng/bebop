@@ -17,47 +17,59 @@ case class Cell[E]()
   object msg {
     case class Foreach(f: Option[E] => Unit)
     case class Put(value: E)
-    case class RegisterPropagator(propagator: Propagator, n: Double)
+    case class RegisterPropagator(propagator: Propagator, n: Int)
     case class RegisterCell(cell: Cell[E])
+    case class SendToPropagator(propagator: Propagator, n: Int)
   }
 
   private class CellActor extends Actor {
 
     val log = Logging(context.system, this)
 
-    private var registeredPropagators: List[(Propagator, Double)] = Nil
+    private var registeredPropagators: List[(Propagator, Int)] = Nil
     private var registeredCells: List[Cell[E]] = Nil
 
     private var content: Option[E] = None
 
-    private def join(value: E) = {
-      val newValue = content match {
-        case Some(oldValue) => elementJoin.join(oldValue, value)
-        case None => value
-      }
-
-      if (content != Some(newValue)) {
-        content = Some(newValue)
-
-        registeredPropagators.foreach { case (propagator, n) =>
-          propagator.updateArg(newValue, n)
-        }
-
-        registeredCells.foreach { case cell =>
-          cell.put(newValue)
-        }
+    private def sendToAll(): Unit = {
+      content match {
+        case Some(value) =>
+          registeredPropagators.foreach { case (propagator, n) =>
+            propagator.updateArg(value, n)
+          }
+          registeredCells.foreach { case cell =>
+            cell.put(value)
+          }
+        case None => {}
       }
     }
 
     def receive = {
       case msg.Foreach(f) =>
         f(content)
-      case msg.Put(a) =>
-        join(a)
+      case msg.Put(value) =>
+        val newValue = content match {
+          case Some(oldValue) => elementJoin.join(oldValue, value)
+          case None => value
+        }
+        content match {
+          case Some(oldValue) if oldValue != newValue =>
+            content = Some(newValue)
+            sendToAll()
+          case None =>
+            content = Some(newValue)
+            sendToAll()
+        }
       case msg.RegisterPropagator(propagator, n) =>
         registeredPropagators = (propagator, n) :: registeredPropagators
       case msg.RegisterCell(cell) =>
         registeredCells = cell :: registeredCells
+      case msg.SendToPropagator(propagator, n) =>
+        content match {
+          case Some(value) =>
+            propagator.updateArg(value, n)
+          case None => {}
+        }
       case msg =>
         log.info(s"received unknown message: ${msg}")
     }
@@ -76,11 +88,18 @@ case class Cell[E]()
     this
   }
 
-  def asArgOf(propagator: Propagator, n: Double): Unit =
+  def asArgOf(propagator: Propagator, n: Int): Unit = {
     actor ! msg.RegisterPropagator(propagator, n)
+    actor ! msg.SendToPropagator(propagator, n)
+  }
 
-  def forward(cell: Cell[E]): Unit =
+  def forward(cell: Cell[E]): Unit = {
     actor ! msg.RegisterCell(cell)
+    foreach {
+      case Some(value) => cell.put(value)
+      case None => {}
+    }
+  }
 
   def unify(cell: Cell[E]): Unit = {
     cell.forward(this)

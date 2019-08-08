@@ -1,7 +1,5 @@
 package xieyuheng.bebop
 
-
-
 import akka.actor.{ Actor, ActorRef, ActorSystem, Props, PoisonPill }
 import akka.event.Logging
 

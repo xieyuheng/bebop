@@ -13,7 +13,7 @@ class bebopSpec extends FlatSpec with Matchers {
 
   import system.dispatcher
 
-  val Blink = 10.millis
+  val Blink = 100.millis
 
   "Fn1" can "build propagator" in {
     val x = Cell()
