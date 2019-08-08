@@ -15,7 +15,7 @@ For the order of the Solar System.
 
 ## References
 
-- [Revised Report on the Propagator Model](jedu/mac/users/gjs/propagators/)
+- [Revised Report on the Propagator Model](https://groups.csail.mit.edu/mac/users/gjs/propagators/)
 
 ## License
 
