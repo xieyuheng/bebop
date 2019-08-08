@@ -28,7 +28,7 @@ case class Fn2[A1, A2, R]
     var arg1: Option[A1] = None
     var arg2: Option[A2] = None
 
-    def exeIfPossible() = {
+    def exe() = {
       (arg1, arg2) match {
         case (Some(a1), Some(a2)) =>
           retCell.put(fn(a1, a2))
@@ -39,10 +39,10 @@ case class Fn2[A1, A2, R]
     def receive = {
       case (a: A1, 1) =>
         arg1 = Some(a)
-        exeIfPossible()
-      case (a: A2, 1) =>
+        exe()
+      case (a: A2, 2) =>
         arg2 = Some(a)
-        exeIfPossible()
+        exe()
       case msg =>
         log.info(s"received unknown message: ${msg}")
     }
