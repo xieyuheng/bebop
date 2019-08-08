@@ -2,8 +2,6 @@ import org.scalatest._
 
 import xieyuheng.bebop._
 
-import xieyuheng.pracat.JoinSemilattice
-
 import akka.actor.{ Actor, ActorRef, ActorSystem, Props, PoisonPill }
 import akka.event.Logging
 
@@ -11,7 +9,7 @@ import scala.concurrent.duration._
 
 class bebopSpec extends FlatSpec with Matchers {
 
-  implicit val doubleJoinSemilattice = new JoinSemilattice[Double] {
+  implicit val newReplaceOldDouble = new joinAble[Double] {
     def join(a: Double, b: Double) = b
   }
 

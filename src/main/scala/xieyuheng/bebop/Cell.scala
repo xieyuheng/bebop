@@ -1,7 +1,5 @@
 package xieyuheng.bebop
 
-import xieyuheng.pracat.JoinSemilattice
-
 import akka.actor.{ Actor, ActorRef, ActorSystem, Props, PoisonPill }
 import akka.event.Logging
 
@@ -9,7 +7,7 @@ import java.util.UUID
 
 case class Cell[E]()
   (implicit
-    lattice: JoinSemilattice[E],
+    lattice: joinAble[E],
     system: ActorSystem) {
 
   private object CellActor {

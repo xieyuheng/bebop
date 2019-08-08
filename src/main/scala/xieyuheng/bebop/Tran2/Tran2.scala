@@ -1,13 +1,11 @@
 package xieyuheng.bebop
 
-import xieyuheng.pracat.JoinSemilattice
-
 import akka.actor.ActorSystem
 
 trait Tran2[A1, A2, R] {
-  implicit val arg1Lattice: JoinSemilattice[A1]
-  implicit val arg2Lattice: JoinSemilattice[A2]
-  implicit val retLattice: JoinSemilattice[R]
+  implicit val arg1Lattice: joinAble[A1]
+  implicit val arg2Lattice: joinAble[A2]
+  implicit val retLattice: joinAble[R]
   implicit val system: ActorSystem
 
   def connect

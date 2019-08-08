@@ -1,7 +1,5 @@
 package xieyuheng.bebop
 
-import xieyuheng.pracat.JoinSemilattice
-
 import akka.actor.{ Actor, ActorRef, ActorSystem, Props, PoisonPill }
 import akka.event.Logging
 
@@ -10,8 +8,8 @@ import java.util.UUID
 case class Fn1[A1, R]
   (fn: PartialFunction[A1, R])
   (implicit
-    val arg1Lattice: JoinSemilattice[A1],
-    val retLattice: JoinSemilattice[R],
+    val arg1Lattice: joinAble[A1],
+    val retLattice: joinAble[R],
     val system: ActorSystem) extends Tran1[A1, R] {
 
   private object Fn1Actor {
