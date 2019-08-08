@@ -43,6 +43,7 @@ class heronSpec extends FlatSpec with Matchers {
 
     def sqrtIter = Cn2[Double, Double, Double] {
       case (x, guess, answer) =>
+        // TODO
         // Tran.switch(control, input, output)
         ???
     }
