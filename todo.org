@@ -3,7 +3,7 @@
 - what if not comparable ?
 - Interval
 - jsValue
-- default JoinSemilattice for basic types
+- default Join for basic types
   - maybe do this in pracat
 * macro
 - macro to use general Tran
