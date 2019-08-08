@@ -19,7 +19,7 @@ case class Cell[E]()
   object msg {
     case class Foreach(f: Option[E] => Unit)
     case class Put(value: E)
-    case class RegisterPropagator(propagator: Propagator, n: Int)
+    case class RegisterPropagator(propagator: Propagator, n: Double)
     case class RegisterCell(cell: Cell[E])
   }
 
@@ -27,26 +27,26 @@ case class Cell[E]()
 
     val log = Logging(context.system, this)
 
-    private var registeredPropagators: List[(Propagator, Int)] = Nil
+    private var registeredPropagators: List[(Propagator, Double)] = Nil
     private var registeredCells: List[Cell[E]] = Nil
 
     private var content: Option[E] = None
 
-    private def join(a: E) = {
-      val c = content match {
-        case Some(b) => lattice.join(a, b)
-        case None => a
+    private def join(value: E) = {
+      val newValue = content match {
+        case Some(oldValue) => lattice.join(oldValue, value)
+        case None => value
       }
 
-      if (content != Some(c)) {
-        content = Some(c)
+      if (content != Some(newValue)) {
+        content = Some(newValue)
 
         registeredPropagators.foreach { case (propagator, n) =>
-          propagator.updateArg(c, n)
+          propagator.updateArg(newValue, n)
         }
 
         registeredCells.foreach { case cell =>
-          cell.put(c)
+          cell.put(newValue)
         }
       }
     }
@@ -78,7 +78,7 @@ case class Cell[E]()
     this
   }
 
-  def asArgOf(propagator: Propagator, n: Int): Unit =
+  def asArgOf(propagator: Propagator, n: Double): Unit =
     actor ! msg.RegisterPropagator(propagator, n)
 
   def forward(cell: Cell[E]): Unit =

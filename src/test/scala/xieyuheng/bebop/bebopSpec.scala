@@ -11,8 +11,8 @@ import scala.concurrent.duration._
 
 class bebopSpec extends FlatSpec with Matchers {
 
-  implicit val intJoinSemilattice = new JoinSemilattice[Int] {
-    def join(a: Int, b: Int) = a
+  implicit val doubleJoinSemilattice = new JoinSemilattice[Double] {
+    def join(a: Double, b: Double) = b
   }
 
   implicit val system = ActorSystem("bebopSpec")
@@ -24,7 +24,7 @@ class bebopSpec extends FlatSpec with Matchers {
   "Fn1" can "build propagator" in {
     val x = Cell()
 
-    val add1 = Fn1[Int, Int] {
+    val add1 = Fn1[Double, Double] {
       case x => x + 1
     }
 
@@ -45,11 +45,11 @@ class bebopSpec extends FlatSpec with Matchers {
   "Cn1" can "build propagator" in {
     val x = Cell()
 
-    val add1 = Fn1[Int, Int] {
+    val add1 = Fn1[Double, Double] {
       case x => x + 1
     }
 
-    val add2 = Cn1[Int, Int] {
+    val add2 = Cn1[Double, Double] {
       case (a, o) =>
         val b = Cell()
         add1.connect(a, b)
@@ -73,11 +73,11 @@ class bebopSpec extends FlatSpec with Matchers {
   "Ap1" can "build propagator" in {
     val x = Cell()
 
-    val add1 = Fn1[Int, Int] {
+    val add1 = Fn1[Double, Double] {
       case x => x + 1
     }
 
-    val add2 = Ap1[Int, Int] {
+    val add2 = Ap1[Double, Double] {
       case a => add1(add1(a))
     }
 
@@ -99,7 +99,7 @@ class bebopSpec extends FlatSpec with Matchers {
     val x = Cell()
     val y = Cell()
 
-    val add = Fn2[Int, Int, Int] {
+    val add = Fn2[Double, Double, Double] {
       case (x, y) => x + y
     }
 
@@ -121,20 +121,20 @@ class bebopSpec extends FlatSpec with Matchers {
     val x = Cell()
     val y = Cell()
 
-    val add = Fn2[Int, Int, Int] {
+    val add = Fn2[Double, Double, Double] {
       case (x, y) => x + y
     }
 
-    val mul = Fn2[Int, Int, Int] {
+    val mul = Fn2[Double, Double, Double] {
       case (x, y) => x * y
     }
 
-    val square = Cn1[Int, Int] {
+    val square = Cn1[Double, Double] {
       case (x, o) =>
         mul.connect(x, x, o)
     }
 
-    val euclid = Cn2[Int, Int, Int] {
+    val euclid = Cn2[Double, Double, Double] {
       case (x, y, o) =>
         add.connect(square(x), square(y), o)
     }
@@ -157,19 +157,19 @@ class bebopSpec extends FlatSpec with Matchers {
     val x = Cell()
     val y = Cell()
 
-    val add = Fn2[Int, Int, Int] {
+    val add = Fn2[Double, Double, Double] {
       case (x, y) => x + y
     }
 
-    val mul = Fn2[Int, Int, Int] {
+    val mul = Fn2[Double, Double, Double] {
       case (x, y) => x * y
     }
 
-    val square = Ap1[Int, Int] {
+    val square = Ap1[Double, Double] {
       case x => mul(x, x)
     }
 
-    val euclid = Ap2[Int, Int, Int] {
+    val euclid = Ap2[Double, Double, Double] {
       case (x, y) =>
         add(square(x), square(y))
     }
