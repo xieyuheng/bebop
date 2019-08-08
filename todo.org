@@ -1,5 +1,3 @@
-- Tran2[A1, A2, R]
-- Tran3[A1, A2, A3, R]
 * datatype
 - Interval math
 - default JoinSemilattice for basic types
