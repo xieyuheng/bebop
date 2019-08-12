@@ -53,9 +53,11 @@ case class Cell[E]()
           case None => value
         }
         content match {
-          case Some(oldValue) if oldValue != newValue =>
-            content = Some(newValue)
-            sendToAll()
+          case Some(oldValue) =>
+            if (oldValue != newValue) {
+              content = Some(newValue)
+              sendToAll()
+            }
           case None =>
             content = Some(newValue)
             sendToAll()
