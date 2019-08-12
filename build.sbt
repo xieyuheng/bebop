@@ -32,7 +32,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.slick" %% "slick-hikaricp" % slickVersion,
   "com.typesafe" % "config" % "1.3.4",
   "com.h2database" % "h2" % "1.4.197",
-  "mysql" % "mysql-connector-java" % "6.0.6",
+  "org.postgresql" % "postgresql" % "9.3-1100-jdbc41",
   "ch.qos.logback" % "logback-classic" % "1.2.3",
   "io.spray" %% "spray-json" % "1.3.5",
   "xyz.driver" %% "spray-json-derivation" % "0.7.0",
