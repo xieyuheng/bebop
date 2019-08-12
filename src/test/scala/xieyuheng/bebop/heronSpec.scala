@@ -18,7 +18,7 @@ class heronSpec extends FlatSpec with Matchers {
   val Blink = 100.millis
 
   "propagator model" can "implement heron step" in {
-    val heronStep = Fn2[Double, Double, Double] {
+    def heronStep = Fn2[Double, Double, Double] {
       case (x, guess) => (guess + x / guess) / 2
     }
 
@@ -35,17 +35,62 @@ class heronSpec extends FlatSpec with Matchers {
   }
 
   it can "implement sqrt by sqrtIter" in {
+    val mul = Fn2[Double, Double, Double] {
+      case (x, y) => x * y
+    }
+
+    val sub = Fn2[Double, Double, Double] {
+      case (x, y) => x - y
+    }
+
+    val abs = Fn1[Double, Double] {
+      case x => scala.math.abs(x)
+    }
+
+    val eq = Fn2[Double, Double, Binary] {
+      case (x, y) => if (x == y) Yes else No
+    }
+
+    val lt = Fn2[Double, Double, Binary] {
+      case (x, y) => if (x < y) Yes else No
+    }
+
+    val gt = Fn2[Double, Double, Binary] {
+      case (x, y) => if (x > y) Yes else No
+    }
+
+    def heronStep = Fn2[Double, Double, Double] {
+      case (x, guess) => (guess + x / guess) / 2
+    }
+
     def sqrt = Ap1[Double, Double] {
       case x =>
         val guess = Cell[Double]().put(1)
         sqrtIter(x, guess)
     }
 
-    def sqrtIter = Cn2[Double, Double, Double] {
-      case (x, guess, answer) =>
-        // TODO
-        // Tran.switch(control, input, output)
-        ???
+    def goodEnough = Ap2[Double, Double, Binary] {
+      case (x, guess) =>
+        val epsilon = Cell[Double]().put(0.00000001)
+        lt(abs(sub(mul(guess, guess), x)), epsilon)
+    }
+
+    def sqrtIter: Ap2[Double, Double, Double] = Ap2[Double, Double, Double] {
+      case (x, guess) =>
+        ife (goodEnough(x, guess)) {
+          guess
+        } {
+          sqrtIter(x, heronStep(x, guess))
+        }
+    }
+
+    val x = Cell[Double]
+    val answer = sqrt(x)
+
+    x.put(2)
+
+    system.scheduler.scheduleOnce(Blink) {
+      answer.foreach { content => println(content) }
     }
   }
 
@@ -93,7 +138,7 @@ class heronSpec extends FlatSpec with Matchers {
       case (x, y) => x - y
     }
 
-    val equ = Fn2[Double, Double, Binary] {
+    val eq = Fn2[Double, Double, Binary] {
       case (x, y) => if (x == y) Yes else No
     }
 
@@ -102,7 +147,7 @@ class heronSpec extends FlatSpec with Matchers {
 
     def factorial: Ap1[Double, Double] = Ap1[Double, Double] {
       case n =>
-        ife (equ(zero, n)) {
+        ife (eq(zero, n)) {
           one
         } {
           mul(n, factorial(sub(n, one)))
@@ -115,7 +160,7 @@ class heronSpec extends FlatSpec with Matchers {
 
     x.put(4)
 
-    system.scheduler.scheduleOnce(1.seconds) {
+    system.scheduler.scheduleOnce(Blink) {
       answer.foreach { content => assert(content == Some(24)) }
     }
   }
