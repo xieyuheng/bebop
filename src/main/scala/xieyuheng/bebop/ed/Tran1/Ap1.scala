@@ -3,7 +3,7 @@ package xieyuheng.bebop.ed
 import akka.actor.ActorSystem
 
 case class Ap1[A1, R]
-  (applier: Cell[A1] => Cell[R])
+  (applier: (Cell[A1]) => Cell[R])
   (implicit
     val arg1Join: Join[A1],
     val retJoin: Join[R],

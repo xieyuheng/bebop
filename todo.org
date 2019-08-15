@@ -28,14 +28,12 @@
     https://wiki.haskell.org/Typeclassopedia
   - finish scala cat
 * ed
-- sqrtIter
 - test should not relies on `system.scheduler.scheduleOnce`
 - Tran0
 - what if not comparable ?
 - Interval
 - jsValue
 - default Join for basic types
-  - maybe do this in ein
 - macro
   - macro to use general Tran
   - macro `Tran` to generate Tran1, Tran2, ..., Tran22
