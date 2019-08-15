@@ -1,3 +1,33 @@
+- free monad and cofree
+- finite lattics for concept analysis
+  trait FormalContext[O, A]` of objects and attributes
+  case class FormalConcept[O, A](objects: O, attributes: A)
+  extent intent
+* spike
+- spike the https://genealogy.math.ndsu.nodak.edu
+- parser
+  - safe json parser
+  - better csv parser
+  - xml for spike
+* ein
+- better way to implement monad
+  - Kleisli category
+- better way to implement interface of typeclass
+  - learn from cat
+- continuation monad
+- writerMonad -- with Monoid
+- readerMonad
+- Kleisli category
+  - Kleisli example about about log
+- document each practical monad usage in web app
+- pracat
+  - order and lattics -- for propagator
+  - Fix and Cofree
+    https://genealogy.math.ndsu.nodak.edu
+  - traversable functor
+    https://wiki.haskell.org/Typeclassopedia
+  - finish scala cat
+* ed
 - sqrtIter
 - test should not relies on `system.scheduler.scheduleOnce`
 - Tran0
@@ -6,8 +36,8 @@
 - jsValue
 - default Join for basic types
   - maybe do this in ein
-* macro
-- macro to use general Tran
-- macro `Tran` to generate Tran1, Tran2, ..., Tran22
-* persistent cell
-- cells as database
+- macro
+  - macro to use general Tran
+  - macro `Tran` to generate Tran1, Tran2, ..., Tran22
+- persistent cell
+  - cells as database
