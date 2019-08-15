@@ -1,5 +1,5 @@
-- free monad and cofree
-- finite lattics for concept analysis
+* formal concept analysis
+- finite lattics for formal concept analysis
   trait FormalContext[O, A]` of objects and attributes
   case class FormalConcept[O, A](objects: O, attributes: A)
   extent intent
@@ -10,6 +10,7 @@
   - better csv parser
   - xml for spike
 * ein
+- free monad and cofree
 - better way to implement monad
   - Kleisli category
 - better way to implement interface of typeclass
