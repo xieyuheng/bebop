@@ -1,0 +1,10 @@
+- better way to implement monad
+  - Kleisli category
+- better way to implement interface of typeclass
+  - learn from cat
+- continuation monad
+- writerMonad -- with Monoid
+- readerMonad
+- Kleisli category
+  - Kleisli example about about log
+- document each practical monad usage in web app

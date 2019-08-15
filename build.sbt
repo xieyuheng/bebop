@@ -1,9 +1,8 @@
 organization := "xieyuheng"
 name := "bebop"
 version := "0.0.1"
-scalaVersion := "2.12.8"
+scalaVersion := "2.12.9"
 
-lazy val pracatVersion = "0.0.1-SNAPSHOT"
 lazy val akkaVersion = "2.5.23"
 lazy val akkaHttpVersion = "10.1.9"
 lazy val slickVersion = "3.3.1"
@@ -16,12 +15,12 @@ scalacOptions ++= Seq(
   "-encoding", "UTF-8",
   "-unchecked",
   "-feature",
+  "-language:higherKinds",
   "-language:implicitConversions",
   "-Ywarn-dead-code",
 )
 
 libraryDependencies ++= Seq(
-  "xieyuheng" %% "pracat" % pracatVersion,
   "com.typesafe.akka" %% "akka-actor" % akkaVersion,
   "com.typesafe.akka" %% "akka-testkit" % akkaVersion,
   "com.typesafe.akka" %% "akka-stream" % akkaVersion,
@@ -35,3 +34,8 @@ libraryDependencies ++= Seq(
   "io.spray" %% "spray-json" % "1.3.5",
   "org.scalatest" %% "scalatest" % "3.0.5" % "test"
 )
+
+enablePlugins(JavaAppPackaging)
+resolvers += Resolver.sonatypeRepo("releases")
+addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.10.3")
+addCompilerPlugin("org.typelevel" % "kind-projector" % "0.10.3" cross CrossVersion.binary)

@@ -1,10 +1,14 @@
 # Bebop
 
-An implementation of the Propagator Model.
-
-For the order of the Solar System.
+Ok, three, two, one, let's jam!
 
 ## Contains
+
+- Spike
+- Jet
+- Faye
+- Ed
+- Ein
 
 ## Community
 
@@ -12,10 +16,6 @@ For the order of the Solar System.
 - [Style Guide](STYLE-GUIDE.md) -- observe the style of existing code and respect it
 - [Code of Conduct](CODE-OF-CONDUCT.md)
 - CI -- [travis-ci](https://travis-ci.org/xieyuheng/bebop)
-
-## References
-
-- [Revised Report on the Propagator Model](https://groups.csail.mit.edu/mac/users/gjs/propagators/)
 
 ## License
 

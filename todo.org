@@ -5,7 +5,7 @@
 - Interval
 - jsValue
 - default Join for basic types
-  - maybe do this in pracat
+  - maybe do this in ein
 * macro
 - macro to use general Tran
 - macro `Tran` to generate Tran1, Tran2, ..., Tran22
