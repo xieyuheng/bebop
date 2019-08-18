@@ -4,11 +4,11 @@ Ok, three, two, one, let's jam!
 
 ## Contains
 
-- Spike
-- Jet
-- Faye
-- Ed
-- Ein
+- [Spike](src/main/scala/xieyuheng/bebop/spike) -- fight and arrest.
+- Jet -- 青椒肉丝!
+- Faye -- wanna play a game?
+- [Ed](src/main/scala/xieyuheng/bebop/ed) -- let information propagate.
+- [Ein](src/main/scala/xieyuheng/bebop/ein) -- cat?
 
 ## Community
 
