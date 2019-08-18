@@ -48,3 +48,11 @@ You already met one way to make cells in the form of define-cell;
 we will talk about more later, but let's talk about propagators first.
 
 # [NOTE] Propagator is first class Content
+
+# [NOTE] push vs pull
+
+Applicative order lambda calculus --
+the propagators "push" data through the network.
+
+Normal order lambda calculus --
+the propagators "pull" only the data they need?
