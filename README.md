@@ -5,7 +5,7 @@ Ok, three, two, one, let's jam!
 ## Members
 
 Core:
-- [Spike](src/main/scala/xieyuheng/bebop/spike) -- I will bring it back.
+- [Spike](src/main/scala/xieyuheng/bebop/spike) -- let's beat this target.
 - Jet -- 青椒肉丝!
 - Faye -- Wanna play a game?
 - [Ed](src/main/scala/xieyuheng/bebop/ed) -- Let information propagate.
