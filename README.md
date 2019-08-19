@@ -2,13 +2,17 @@
 
 Ok, three, two, one, let's jam!
 
-## Contains
+## Members
 
-- [Spike](src/main/scala/xieyuheng/bebop/spike) -- fight and arrest.
+Core:
+- [Spike](src/main/scala/xieyuheng/bebop/spike) -- I will bring it back.
 - Jet -- 青椒肉丝!
-- Faye -- wanna play a game?
-- [Ed](src/main/scala/xieyuheng/bebop/ed) -- let information propagate.
-- [Ein](src/main/scala/xieyuheng/bebop/ein) -- cat?
+- Faye -- Wanna play a game?
+- [Ed](src/main/scala/xieyuheng/bebop/ed) -- Let information propagate.
+- [Ein](src/main/scala/xieyuheng/bebop/ein) -- Cats?
+
+Guest:
+- Peirce -- Consider what effects, that might conceivably have practical bearings, we conceive the object of our conception to have. Then, our conception of these effects is the whole of our conception of the object.
 
 ## Community
 
