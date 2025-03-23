@@ -4,7 +4,7 @@
 
 - TODO
 
-## Polymorphism v.s. Sum type and pattern match
+## Polymorphism vs. Sum type and pattern match
 
 - TODO
 
